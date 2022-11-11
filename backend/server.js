@@ -1,14 +1,15 @@
+const { json } = require('express');
 const express=require('express')
-const {connection}=require("./config/dbconnect")
+const {connection}=require("./config/dbconnect");
+const { createUser } = require('./controller/UserFunction');
+const route=require("./routes/UserRoutes")
+connection();
 
 const app=express();
-connection();
-app.get("/",(req,res)=>{
-    res.status(200).json({
-        success:true,
-        message:"get route work fine"
-    })
-})
+app.use(json());
+
+app.use("/api",route);
+
 app.listen(4000,()=>{
     console.log("server is running at port 4000")
 })
